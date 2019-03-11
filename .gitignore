@@ -1,2 +1,15 @@
-.idea/workspace.xml
-outs/
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# IntelliJ
+out/
+
+# libs
+libs/
+
+# File-based project format
+*.iws
