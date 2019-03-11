@@ -84,62 +84,104 @@ public class MineShaftDriver {
     }
 
     private void render() {
-        // Clear the screen of contents
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        try{
+            glBegin(GL_QUADS);
 
-        // Front Face
-        glColor3f(1, 0, 0);
-        glBegin(GL_QUADS);
-        glVertex3f(-5, 5, -100);
-        glVertex3f(5, 5, -100);
-        glVertex3f(5, -5, -100);
-        glVertex3f(-5, -5, -100);
-        glEnd();
+                //Top
+                glColor3f(0.0f,0.0f,1.0f);
+                glVertex3f( 1.0f, 1.0f,-1.0f);
+                glVertex3f(-1.0f, 1.0f,-1.0f);
+                glVertex3f(-1.0f, 1.0f, 1.0f);
+                glVertex3f( 1.0f, 1.0f, 1.0f);
 
-        // Back Face
-        glColor3f(0, 1, 0);
-        glBegin(GL_QUADS);
-        glVertex3f(-5, 5, -105);
-        glVertex3f(5, 5, -105);
-        glVertex3f(5, -5, -105);
-        glVertex3f(-5, -5, -105);
-        glEnd();
+                //Bottom
+                glColor3f(0.0f,1.0f,0.0f);
+                glVertex3f( 1.0f,-1.0f, 1.0f);
+                glVertex3f(-1.0f,-1.0f, 1.0f);
+                glVertex3f(-1.0f,-1.0f,-1.0f);
+                glVertex3f( 1.0f,-1.0f,-1.0f);
 
-        // Top Face
-        glColor3f(0, 0, 1);
-        glBegin(GL_QUADS);
-        glVertex3f(-5, 5, -105);
-        glVertex3f(5, 5, -105);
-        glVertex3f(5, 5, -100);
-        glVertex3f(-5, 5, -100);
-        glEnd();
+                //Front
+                glColor3f(0.0f,1.0f,1.0f);
+                glVertex3f( 1.0f, 1.0f, 1.0f);
+                glVertex3f(-1.0f, 1.0f, 1.0f);
+                glVertex3f(-1.0f,-1.0f, 1.0f);
+                glVertex3f( 1.0f,-1.0f, 1.0f);
 
-        // Bottom Face
-        glColor3f(1, 1, 0);
-        glBegin(GL_QUADS);
-        glVertex3f(-5, -5, -105);
-        glVertex3f(5, -5, -105);
-        glVertex3f(5, -5, -100);
-        glVertex3f(-5, -5, -100);
-        glEnd();
+                //Back
+                glColor3f(1.0f,0.0f,0.0f);
+                glVertex3f( 1.0f,-1.0f,-1.0f);
+                glVertex3f(-1.0f,-1.0f,-1.0f);
+                glVertex3f(-1.0f, 1.0f,-1.0f);
+                glVertex3f( 1.0f, 1.0f,-1.0f);
 
-        // Left Face
-        glColor3f(1, 0, 1);
-        glBegin(GL_QUADS);
-        glVertex3f(-5, 5, -100);
-        glVertex3f(-5, 5, -105);
-        glVertex3f(-5, -5, -105);
-        glVertex3f(-5, -5, -100);
-        glEnd();
+                //Left
+                glColor3f(1.0f,0.0f,1.0f);
+                glVertex3f(-1.0f, 1.0f,1.0f);
+                glVertex3f(-1.0f, 1.0f,-1.0f);
+                glVertex3f(-1.0f,-1.0f,-1.0f);
+                glVertex3f(-1.0f,-1.0f, 1.0f);
 
-        // Right Face
-        glColor3f(1, 1, 1);
-        glBegin(GL_QUADS);
-        glVertex3f(5, 5, -100);
-        glVertex3f(5, 5, -105);
-        glVertex3f(5, -5, -105);
-        glVertex3f(5, -5, -100);
-        glEnd();
+                //Right
+                glColor3f(1.0f,1.0f,0.0f);
+                glVertex3f( 1.0f, 1.0f,-1.0f);
+                glVertex3f( 1.0f, 1.0f, 1.0f);
+                glVertex3f( 1.0f,-1.0f, 1.0f);
+                glVertex3f( 1.0f,-1.0f,-1.0f);
+            glEnd();
+
+            glBegin(GL_LINE_LOOP);
+                //Top
+                glColor3f(0.0f,0.0f,0.0f);
+                glVertex3f( 1.0f, 1.0f,-1.0f);
+                glVertex3f(-1.0f, 1.0f,-1.0f);
+                glVertex3f(-1.0f, 1.0f, 1.0f);
+                glVertex3f( 1.0f, 1.0f, 1.0f);
+            glEnd();
+
+            glBegin(GL_LINE_LOOP);
+                //Bottom
+                glVertex3f( 1.0f,-1.0f, 1.0f);
+                glVertex3f(-1.0f,-1.0f, 1.0f);
+                glVertex3f(-1.0f,-1.0f,-1.0f);
+                glVertex3f( 1.0f,-1.0f,-1.0f);
+            glEnd();
+
+            glBegin(GL_LINE_LOOP);
+                //Front
+                glVertex3f( 1.0f, 1.0f, 1.0f);
+                glVertex3f(-1.0f, 1.0f, 1.0f);
+                glVertex3f(-1.0f,-1.0f, 1.0f);
+                glVertex3f( 1.0f,-1.0f, 1.0f);
+            glEnd();
+
+            glBegin(GL_LINE_LOOP);
+                //Back
+                glVertex3f( 1.0f,-1.0f,-1.0f);
+                glVertex3f(-1.0f,-1.0f,-1.0f);
+                glVertex3f(-1.0f, 1.0f,-1.0f);
+                glVertex3f( 1.0f, 1.0f,-1.0f);
+            glEnd();
+
+            glBegin(GL_LINE_LOOP);
+                //Left
+                glVertex3f(-1.0f, 1.0f, 1.0f);
+                glVertex3f(-1.0f, 1.0f,-1.0f);
+                glVertex3f(-1.0f,-1.0f,-1.0f);
+                glVertex3f(-1.0f,-1.0f, 1.0f);
+            glEnd();
+
+            glBegin(GL_LINE_LOOP);
+                //Right
+                glVertex3f( 1.0f, 1.0f,-1.0f);
+                glVertex3f( 1.0f, 1.0f, 1.0f);
+                glVertex3f( 1.0f,-1.0f, 1.0f);
+                glVertex3f( 1.0f,-1.0f,-1.0f);
+            glEnd();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void gameLoop() {
