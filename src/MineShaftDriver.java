@@ -1,5 +1,7 @@
 import org.lwjgl.*;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
 
@@ -25,6 +27,7 @@ public class MineShaftDriver {
     /**
      * Take in the specifications of the window size and list of polygons to render.
      * Also ensures that if an Exception arises, the stack is printed.
+     *
      * @param width
      * @param height
      */
@@ -32,7 +35,7 @@ public class MineShaftDriver {
         try {
             createWindow(width, height);
             initGL(width, height);
-            render();
+            gameLoop();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,6 +43,7 @@ public class MineShaftDriver {
 
     /**
      * Creates a non-fullscreen window of the specified size.
+     *
      * @param width
      * @param height
      * @throws Exception
@@ -55,6 +59,7 @@ public class MineShaftDriver {
     /**
      * Set background color to black, RGB = (0, 0, 0).
      * Set orthographic matrix with the specified size.
+     *
      * @param width
      * @param height
      */
@@ -79,99 +84,127 @@ public class MineShaftDriver {
     }
 
     private void render() {
-        // Camera Travel Speed
-        float cameraSpeed  = 0.0f;
+        // Clear the screen of contents
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        // Front Face
+        glColor3f(1, 0, 0);
+        glBegin(GL_QUADS);
+        glVertex3f(-5, 5, -100);
+        glVertex3f(5, 5, -100);
+        glVertex3f(5, -5, -100);
+        glVertex3f(-5, -5, -100);
+        glEnd();
+
+        // Back Face
+        glColor3f(0, 1, 0);
+        glBegin(GL_QUADS);
+        glVertex3f(-5, 5, -105);
+        glVertex3f(5, 5, -105);
+        glVertex3f(5, -5, -105);
+        glVertex3f(-5, -5, -105);
+        glEnd();
+
+        // Top Face
+        glColor3f(0, 0, 1);
+        glBegin(GL_QUADS);
+        glVertex3f(-5, 5, -105);
+        glVertex3f(5, 5, -105);
+        glVertex3f(5, 5, -100);
+        glVertex3f(-5, 5, -100);
+        glEnd();
+
+        // Bottom Face
+        glColor3f(1, 1, 0);
+        glBegin(GL_QUADS);
+        glVertex3f(-5, -5, -105);
+        glVertex3f(5, -5, -105);
+        glVertex3f(5, -5, -100);
+        glVertex3f(-5, -5, -100);
+        glEnd();
+
+        // Left Face
+        glColor3f(1, 0, 1);
+        glBegin(GL_QUADS);
+        glVertex3f(-5, 5, -100);
+        glVertex3f(-5, 5, -105);
+        glVertex3f(-5, -5, -105);
+        glVertex3f(-5, -5, -100);
+        glEnd();
+
+        // Right Face
+        glColor3f(1, 1, 1);
+        glBegin(GL_QUADS);
+        glVertex3f(5, 5, -100);
+        glVertex3f(5, 5, -105);
+        glVertex3f(5, -5, -105);
+        glVertex3f(5, -5, -100);
+        glEnd();
+    }
+
+    public void gameLoop() {
+        FPCameraController camera = new FPCameraController(0, 0, 0);
+        float dx = 0.0f;
+        float dy = 0.0f;
+        float dt = 0.0f; //length of frame
+        float lastTime = 0.0f; // when the last frame was
+        long time = 0;
+        float mouseSensitivity = 0.09f;
+        float movementSpeed = .35f;
+        //hide the mouse
+        Mouse.setGrabbed(true);
+
+        // keep looping till the display window is closed the ESC key is down
         while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-            // Render
+            time = Sys.getTime();
+            lastTime = time;
+            //distance in mouse movement
+            //from the last getDX() call.
+            dx = Mouse.getDX();
+            //distance in mouse movement
+            //from the last getDY() call.
+            dy = Mouse.getDY();
+            //control camera yaw from x movement fromt the mouse
+            camera.yaw(dx * mouseSensitivity);
+            //control camera pitch from y movement fromt the mouse
+            camera.pitch(dy * mouseSensitivity);
 
-            // Clear the screen of contents
+            //when passing in the distance to move
+            //we times the movementSpeed with dt this is a time scale
+            //so if its a slow frame u move more then a fast frame
+            //so on a slow computer you move just as fast as on a fast computer
+            if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+                // move forward
+                camera.walkForward(movementSpeed);
+            }
+            if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+                // moves backwards
+                camera.walkBackwards(movementSpeed);
+            }
+            if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+                camera.strafeLeft(movementSpeed);
+            }
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+                camera.strafeRight(movementSpeed);
+            }
+            if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+                camera.moveUp(movementSpeed);
+            }
+            if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
+                camera.moveDown(movementSpeed);
+            }
+            //set the modelview matrix back to the identity
+            glLoadIdentity();
+            //look through the camera before you draw anything
+            camera.lookThrough();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-            // Push the screen forward
-            glTranslatef(0, 0, cameraSpeed);
-
-            // Front Face
-            glColor3f(1, 0 ,0);
-            glBegin(GL_QUADS);
-                glVertex3f(-5, 5, -100);
-                glVertex3f(5, 5, -100);
-                glVertex3f(5, -5, -100);
-                glVertex3f(-5, -5, -100);
-            glEnd();
-
-            // Back Face
-            glColor3f(0, 1 , 0);
-            glBegin(GL_QUADS);
-                glVertex3f(-5, 5, -105);
-                glVertex3f(5, 5, -105);
-                glVertex3f(5, -5, -105);
-                glVertex3f(-5, -5, -105);
-            glEnd();
-
-            // Top Face
-            glColor3f(0, 0, 1);
-            glBegin(GL_QUADS);
-                glVertex3f(-5, 5, -105);
-                glVertex3f(5, 5, -105);
-                glVertex3f(5, 5, -100);
-                glVertex3f(-5, 5, -100);
-            glEnd();
-
-            // Bottom Face
-            glColor3f(1, 1, 0);
-            glBegin(GL_QUADS);
-                glVertex3f(-5, -5, -105);
-                glVertex3f(5, -5, -105);
-                glVertex3f(5, -5, -100);
-                glVertex3f(-5, -5, -100);
-            glEnd();
-
-            // Left Face
-            glColor3f(1, 0, 1);
-            glBegin(GL_QUADS);
-                glVertex3f(-5, 5, -100);
-                glVertex3f(-5, 5, -105);
-                glVertex3f(-5, -5, -105);
-                glVertex3f(-5, -5, -100);
-            glEnd();
-
-            // Right Face
-            glColor3f(1, 1, 1);
-            glBegin(GL_QUADS);
-                glVertex3f(5, 5, -100);
-                glVertex3f(5, 5, -105);
-                glVertex3f(5, -5, -105);
-                glVertex3f(5, -5, -100);
-            glEnd();
-
-
-
-            // Increase Speed
-            if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-                cameraSpeed += 0.01f;
-            }
-            // Decrease Speed
-            if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-                cameraSpeed -= 0.01f;
-            }
-
-            while (Keyboard.next()) {
-                // Reset speed to 0
-                if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-                    cameraSpeed = 0.0f;
-                }
-                // Reset speed to 0 and reset position
-                if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
-                    cameraSpeed = 0.0f;
-                    glLoadIdentity();   // Wipes everything acted on the matrices (the translations)
-                }
-            }
-
+            //you would draw your scene here.
+            render();
+            //draw the buffer to the screen
             Display.update();
             Display.sync(60);
         }
         Display.destroy();
     }
-
 }
