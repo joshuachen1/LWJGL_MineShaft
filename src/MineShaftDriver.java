@@ -10,8 +10,6 @@ import org.lwjgl.opengl.*;
 import org.lwjgl.*;
 import org.lwjgl.util.vector.Vector3f;
 
-import java.util.Random;
-
 /**
  * @author Joshua Chen
  * Date Created: Mar 10, 2019
