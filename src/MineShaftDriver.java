@@ -155,9 +155,11 @@ public class MineShaftDriver {
                 drawCube();
             glEnd();
 
+            // Draw Black Lines (Edges of Cube)
+            glColor3f(0.0f,0.0f,0.0f);
+
             //Top
             glBegin(GL_LINE_LOOP);
-                glColor3f(0.0f,0.0f,0.0f);
                 glVertex3f( 1.0f, 1.0f,-1.0f);
                 glVertex3f(-1.0f, 1.0f,-1.0f);
                 glVertex3f(-1.0f, 1.0f, 1.0f);
