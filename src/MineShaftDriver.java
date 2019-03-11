@@ -152,52 +152,11 @@ public class MineShaftDriver {
     private void render() {
         try{
             glBegin(GL_QUADS);
+                drawCube();
+            glEnd();
 
-                //Top
-                glColor3f(0.0f,0.0f,1.0f);
-                glVertex3f( 1.0f, 1.0f,-1.0f);
-                glVertex3f(-1.0f, 1.0f,-1.0f);
-                glVertex3f(-1.0f, 1.0f, 1.0f);
-                glVertex3f( 1.0f, 1.0f, 1.0f);
-
-                //Bottom
-                glColor3f(0.0f,1.0f,0.0f);
-                glVertex3f( 1.0f,-1.0f, 1.0f);
-                glVertex3f(-1.0f,-1.0f, 1.0f);
-                glVertex3f(-1.0f,-1.0f,-1.0f);
-                glVertex3f( 1.0f,-1.0f,-1.0f);
-
-                //Front
-                glColor3f(0.0f,1.0f,1.0f);
-                glVertex3f( 1.0f, 1.0f, 1.0f);
-                glVertex3f(-1.0f, 1.0f, 1.0f);
-                glVertex3f(-1.0f,-1.0f, 1.0f);
-                glVertex3f( 1.0f,-1.0f, 1.0f);
-
-                //Back
-                glColor3f(1.0f,0.0f,0.0f);
-                glVertex3f( 1.0f,-1.0f,-1.0f);
-                glVertex3f(-1.0f,-1.0f,-1.0f);
-                glVertex3f(-1.0f, 1.0f,-1.0f);
-                glVertex3f( 1.0f, 1.0f,-1.0f);
-
-                //Left
-                glColor3f(1.0f,0.0f,1.0f);
-                glVertex3f(-1.0f, 1.0f,1.0f);
-                glVertex3f(-1.0f, 1.0f,-1.0f);
-                glVertex3f(-1.0f,-1.0f,-1.0f);
-                glVertex3f(-1.0f,-1.0f, 1.0f);
-
-                //Right
-                glColor3f(1.0f,1.0f,0.0f);
-                glVertex3f( 1.0f, 1.0f,-1.0f);
-                glVertex3f( 1.0f, 1.0f, 1.0f);
-                glVertex3f( 1.0f,-1.0f, 1.0f);
-                glVertex3f( 1.0f,-1.0f,-1.0f);
-                glEnd();
-
+            //Top
             glBegin(GL_LINE_LOOP);
-                //Top
                 glColor3f(0.0f,0.0f,0.0f);
                 glVertex3f( 1.0f, 1.0f,-1.0f);
                 glVertex3f(-1.0f, 1.0f,-1.0f);
@@ -205,40 +164,40 @@ public class MineShaftDriver {
                 glVertex3f( 1.0f, 1.0f, 1.0f);
             glEnd();
 
+            //Bottom
             glBegin(GL_LINE_LOOP);
-                //Bottom
                 glVertex3f( 1.0f,-1.0f, 1.0f);
                 glVertex3f(-1.0f,-1.0f, 1.0f);
                 glVertex3f(-1.0f,-1.0f,-1.0f);
                 glVertex3f( 1.0f,-1.0f,-1.0f);
             glEnd();
 
+            //Front
             glBegin(GL_LINE_LOOP);
-                //Front
                 glVertex3f( 1.0f, 1.0f, 1.0f);
                 glVertex3f(-1.0f, 1.0f, 1.0f);
                 glVertex3f(-1.0f,-1.0f, 1.0f);
                 glVertex3f( 1.0f,-1.0f, 1.0f);
             glEnd();
 
+            //Back
             glBegin(GL_LINE_LOOP);
-                //Back
                 glVertex3f( 1.0f,-1.0f,-1.0f);
                 glVertex3f(-1.0f,-1.0f,-1.0f);
                 glVertex3f(-1.0f, 1.0f,-1.0f);
                 glVertex3f( 1.0f, 1.0f,-1.0f);
             glEnd();
 
+            //Left
             glBegin(GL_LINE_LOOP);
-                //Left
                 glVertex3f(-1.0f, 1.0f, 1.0f);
                 glVertex3f(-1.0f, 1.0f,-1.0f);
                 glVertex3f(-1.0f,-1.0f,-1.0f);
                 glVertex3f(-1.0f,-1.0f, 1.0f);
             glEnd();
 
+            //Right
             glBegin(GL_LINE_LOOP);
-                //Right
                 glVertex3f( 1.0f, 1.0f,-1.0f);
                 glVertex3f( 1.0f, 1.0f, 1.0f);
                 glVertex3f( 1.0f,-1.0f, 1.0f);
@@ -248,5 +207,49 @@ public class MineShaftDriver {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void drawCube() {
+        //Top
+        glColor3f(0.0f,0.0f,1.0f);
+        glVertex3f( 1.0f, 1.0f,-1.0f);
+        glVertex3f(-1.0f, 1.0f,-1.0f);
+        glVertex3f(-1.0f, 1.0f, 1.0f);
+        glVertex3f( 1.0f, 1.0f, 1.0f);
+
+        //Bottom
+        glColor3f(0.0f,1.0f,0.0f);
+        glVertex3f( 1.0f,-1.0f, 1.0f);
+        glVertex3f(-1.0f,-1.0f, 1.0f);
+        glVertex3f(-1.0f,-1.0f,-1.0f);
+        glVertex3f( 1.0f,-1.0f,-1.0f);
+
+        //Front
+        glColor3f(0.0f,1.0f,1.0f);
+        glVertex3f( 1.0f, 1.0f, 1.0f);
+        glVertex3f(-1.0f, 1.0f, 1.0f);
+        glVertex3f(-1.0f,-1.0f, 1.0f);
+        glVertex3f( 1.0f,-1.0f, 1.0f);
+
+        //Back
+        glColor3f(1.0f,0.0f,0.0f);
+        glVertex3f( 1.0f,-1.0f,-1.0f);
+        glVertex3f(-1.0f,-1.0f,-1.0f);
+        glVertex3f(-1.0f, 1.0f,-1.0f);
+        glVertex3f( 1.0f, 1.0f,-1.0f);
+
+        //Left
+        glColor3f(1.0f,0.0f,1.0f);
+        glVertex3f(-1.0f, 1.0f,1.0f);
+        glVertex3f(-1.0f, 1.0f,-1.0f);
+        glVertex3f(-1.0f,-1.0f,-1.0f);
+        glVertex3f(-1.0f,-1.0f, 1.0f);
+
+        //Right
+        glColor3f(1.0f,1.0f,0.0f);
+        glVertex3f( 1.0f, 1.0f,-1.0f);
+        glVertex3f( 1.0f, 1.0f, 1.0f);
+        glVertex3f( 1.0f,-1.0f, 1.0f);
+        glVertex3f( 1.0f,-1.0f,-1.0f);
     }
 }
