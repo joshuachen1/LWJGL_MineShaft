@@ -8,6 +8,7 @@ import static org.lwjgl.util.glu.GLU.gluPerspective;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;
 import org.lwjgl.*;
+import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
@@ -76,7 +77,7 @@ public class MineShaftDriver {
         // +x is to the right
         // +y is to the top
         // +z is to the camera
-        gluPerspective((float) 30, width / height, 0.001f, 100);
+        gluPerspective((float) 100.0f, width / height, 0.001f, 100);
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
@@ -89,7 +90,7 @@ public class MineShaftDriver {
         float lastTime = 0.0f; // when the last frame was
         long time = 0;
         float mouseSensitivity = 0.09f;
-        float movementSpeed = .35f;
+        float movementSpeed = .085f;
         //hide the mouse
         Mouse.setGrabbed(true);
 
@@ -130,16 +131,26 @@ public class MineShaftDriver {
             if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
                 camera.moveUp(movementSpeed);
             }
-            if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 camera.moveDown(movementSpeed);
             }
+
             //set the modelview matrix back to the identity
             glLoadIdentity();
+
             //look through the camera before you draw anything
             camera.lookThrough();
+
+            // Since OpenGL draws in order, fragments/shapes can overwrite the ones in front of them.
+            // This tells OpenGL to compare depth against what is already drawn and discard the fragment that is
+            // furthest away.
+            glEnable( GL_DEPTH_TEST );
+            glDepthFunc( GL_LESS );
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
             //you would draw your scene here.
             render();
+
             //draw the buffer to the screen
             Display.update();
             Display.sync(60);
@@ -147,6 +158,7 @@ public class MineShaftDriver {
         Display.destroy();
     }
 
+    // bug: color dominance from outside -> Yellow, purple, red, cyan, green, blue
     private void render() {
         try{
             glBegin(GL_QUADS);
