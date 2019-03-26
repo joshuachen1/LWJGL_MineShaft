@@ -1,7 +1,6 @@
 import org.lwjgl.util.vector.Vector3f;
 
-import static org.lwjgl.opengl.GL11.glRotatef;
-import static org.lwjgl.opengl.GL11.glTranslatef;
+import static org.lwjgl.opengl.GL11.*;
 
 /**
  * @author Joshua Chen
