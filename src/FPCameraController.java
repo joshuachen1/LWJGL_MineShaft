@@ -1,5 +1,7 @@
 import org.lwjgl.util.vector.Vector3f;
-import static org.lwjgl.opengl.GL11.*;
+
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 
 /**
  * @author Joshua Chen
@@ -15,7 +17,7 @@ public class FPCameraController {
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
         position = new Vector3f(x, y, z);
-        lPosition = new Vector3f(x,y,z);
+        lPosition = new Vector3f(x, y, z);
         lPosition.x = 0f;
         lPosition.y = 15f;
         lPosition.z = 0f;
@@ -35,32 +37,32 @@ public class FPCameraController {
 
     //moves the camera forward relative to its current rotation (yaw)
     public void walkForward(float distance) {
-        float xOffset = distance * (float)Math.sin(Math.toRadians(yaw));
-        float zOffset = distance * (float)Math.cos(Math.toRadians(yaw));
+        float xOffset = distance * (float) Math.sin(Math.toRadians(yaw));
+        float zOffset = distance * (float) Math.cos(Math.toRadians(yaw));
         position.x -= xOffset;
         position.z += zOffset;
     }
 
     //moves the camera backward relative to its current rotation (yaw)
     public void walkBackwards(float distance) {
-        float xOffset = distance * (float)Math.sin(Math.toRadians(yaw));
-        float zOffset = distance * (float)Math.cos(Math.toRadians(yaw));
+        float xOffset = distance * (float) Math.sin(Math.toRadians(yaw));
+        float zOffset = distance * (float) Math.cos(Math.toRadians(yaw));
         position.x += xOffset;
         position.z -= zOffset;
     }
 
     //strafes the camera left relative to its current rotation (yaw)
     public void strafeLeft(float distance) {
-        float xOffset = distance * (float)Math.sin(Math.toRadians(yaw-90));
-        float zOffset = distance * (float)Math.cos(Math.toRadians(yaw-90));
+        float xOffset = distance * (float) Math.sin(Math.toRadians(yaw - 90));
+        float zOffset = distance * (float) Math.cos(Math.toRadians(yaw - 90));
         position.x -= xOffset;
         position.z += zOffset;
     }
 
     //strafes the camera right relative to its current rotation (yaw)
     public void strafeRight(float distance) {
-        float xOffset = distance * (float)Math.sin(Math.toRadians(yaw+90));
-        float zOffset = distance * (float)Math.cos(Math.toRadians(yaw+90));
+        float xOffset = distance * (float) Math.sin(Math.toRadians(yaw + 90));
+        float zOffset = distance * (float) Math.cos(Math.toRadians(yaw + 90));
         position.x -= xOffset;
         position.z += zOffset;
     }

@@ -1,15 +1,11 @@
-import org.lwjgl.*;
+import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
-
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.*;
-import org.lwjgl.*;
-import org.lwjgl.util.glu.GLU;
-import org.lwjgl.util.vector.Vector3f;
 
 /**
  * @author Joshua Chen
@@ -144,8 +140,8 @@ public class MineShaftDriver {
             // Since OpenGL draws in order, fragments/shapes can overwrite the ones in front of them.
             // This tells OpenGL to compare depth against what is already drawn and discard the fragment that is
             // furthest away.
-            glEnable( GL_DEPTH_TEST );
-            glDepthFunc( GL_LESS );
+            glEnable(GL_DEPTH_TEST);
+            glDepthFunc(GL_LESS);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             //you would draw your scene here.
@@ -160,108 +156,108 @@ public class MineShaftDriver {
 
     // bug: color dominance from outside -> Yellow, purple, red, cyan, green, blue
     private void render() {
-        try{
+        try {
             glBegin(GL_QUADS);
                 drawCube();
             glEnd();
 
             // Draw Black Lines (Edges of Cube)
-            glColor3f(0.0f,0.0f,0.0f);
+            glColor3f(0.0f, 0.0f, 0.0f);
 
             //Top
             glBegin(GL_LINE_LOOP);
-                glVertex3f( 1.0f, 1.0f,-1.0f);
-                glVertex3f(-1.0f, 1.0f,-1.0f);
+                glVertex3f(1.0f, 1.0f, -1.0f);
+                glVertex3f(-1.0f, 1.0f, -1.0f);
                 glVertex3f(-1.0f, 1.0f, 1.0f);
-                glVertex3f( 1.0f, 1.0f, 1.0f);
+                glVertex3f(1.0f, 1.0f, 1.0f);
             glEnd();
 
             //Bottom
             glBegin(GL_LINE_LOOP);
-                glVertex3f( 1.0f,-1.0f, 1.0f);
-                glVertex3f(-1.0f,-1.0f, 1.0f);
-                glVertex3f(-1.0f,-1.0f,-1.0f);
-                glVertex3f( 1.0f,-1.0f,-1.0f);
+                glVertex3f(1.0f, -1.0f, 1.0f);
+                glVertex3f(-1.0f, -1.0f, 1.0f);
+                glVertex3f(-1.0f, -1.0f, -1.0f);
+                glVertex3f(1.0f, -1.0f, -1.0f);
             glEnd();
 
             //Front
             glBegin(GL_LINE_LOOP);
-                glVertex3f( 1.0f, 1.0f, 1.0f);
+                glVertex3f(1.0f, 1.0f, 1.0f);
                 glVertex3f(-1.0f, 1.0f, 1.0f);
-                glVertex3f(-1.0f,-1.0f, 1.0f);
-                glVertex3f( 1.0f,-1.0f, 1.0f);
+                glVertex3f(-1.0f, -1.0f, 1.0f);
+                glVertex3f(1.0f, -1.0f, 1.0f);
             glEnd();
 
             //Back
             glBegin(GL_LINE_LOOP);
-                glVertex3f( 1.0f,-1.0f,-1.0f);
-                glVertex3f(-1.0f,-1.0f,-1.0f);
-                glVertex3f(-1.0f, 1.0f,-1.0f);
-                glVertex3f( 1.0f, 1.0f,-1.0f);
+                glVertex3f(1.0f, -1.0f, -1.0f);
+                glVertex3f(-1.0f, -1.0f, -1.0f);
+                glVertex3f(-1.0f, 1.0f, -1.0f);
+                glVertex3f(1.0f, 1.0f, -1.0f);
             glEnd();
 
             //Left
             glBegin(GL_LINE_LOOP);
                 glVertex3f(-1.0f, 1.0f, 1.0f);
-                glVertex3f(-1.0f, 1.0f,-1.0f);
-                glVertex3f(-1.0f,-1.0f,-1.0f);
-                glVertex3f(-1.0f,-1.0f, 1.0f);
+                glVertex3f(-1.0f, 1.0f, -1.0f);
+                glVertex3f(-1.0f, -1.0f, -1.0f);
+                glVertex3f(-1.0f, -1.0f, 1.0f);
             glEnd();
 
             //Right
             glBegin(GL_LINE_LOOP);
-                glVertex3f( 1.0f, 1.0f,-1.0f);
-                glVertex3f( 1.0f, 1.0f, 1.0f);
-                glVertex3f( 1.0f,-1.0f, 1.0f);
-                glVertex3f( 1.0f,-1.0f,-1.0f);
+                glVertex3f(1.0f, 1.0f, -1.0f);
+                glVertex3f(1.0f, 1.0f, 1.0f);
+                glVertex3f(1.0f, -1.0f, 1.0f);
+                glVertex3f(1.0f, -1.0f, -1.0f);
             glEnd();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void drawCube() {
         //Top
-        glColor3f(0.0f,0.0f,1.0f);
-        glVertex3f( 1.0f, 1.0f,-1.0f);
-        glVertex3f(-1.0f, 1.0f,-1.0f);
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(1.0f, 1.0f, -1.0f);
+        glVertex3f(-1.0f, 1.0f, -1.0f);
         glVertex3f(-1.0f, 1.0f, 1.0f);
-        glVertex3f( 1.0f, 1.0f, 1.0f);
+        glVertex3f(1.0f, 1.0f, 1.0f);
 
         //Bottom
-        glColor3f(0.0f,1.0f,0.0f);
-        glVertex3f( 1.0f,-1.0f, 1.0f);
-        glVertex3f(-1.0f,-1.0f, 1.0f);
-        glVertex3f(-1.0f,-1.0f,-1.0f);
-        glVertex3f( 1.0f,-1.0f,-1.0f);
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(1.0f, -1.0f, 1.0f);
+        glVertex3f(-1.0f, -1.0f, 1.0f);
+        glVertex3f(-1.0f, -1.0f, -1.0f);
+        glVertex3f(1.0f, -1.0f, -1.0f);
 
         //Front
-        glColor3f(0.0f,1.0f,1.0f);
-        glVertex3f( 1.0f, 1.0f, 1.0f);
+        glColor3f(0.0f, 1.0f, 1.0f);
+        glVertex3f(1.0f, 1.0f, 1.0f);
         glVertex3f(-1.0f, 1.0f, 1.0f);
-        glVertex3f(-1.0f,-1.0f, 1.0f);
-        glVertex3f( 1.0f,-1.0f, 1.0f);
+        glVertex3f(-1.0f, -1.0f, 1.0f);
+        glVertex3f(1.0f, -1.0f, 1.0f);
 
         //Back
-        glColor3f(1.0f,0.0f,0.0f);
-        glVertex3f( 1.0f,-1.0f,-1.0f);
-        glVertex3f(-1.0f,-1.0f,-1.0f);
-        glVertex3f(-1.0f, 1.0f,-1.0f);
-        glVertex3f( 1.0f, 1.0f,-1.0f);
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex3f(1.0f, -1.0f, -1.0f);
+        glVertex3f(-1.0f, -1.0f, -1.0f);
+        glVertex3f(-1.0f, 1.0f, -1.0f);
+        glVertex3f(1.0f, 1.0f, -1.0f);
 
         //Left
-        glColor3f(1.0f,0.0f,1.0f);
-        glVertex3f(-1.0f, 1.0f,1.0f);
-        glVertex3f(-1.0f, 1.0f,-1.0f);
-        glVertex3f(-1.0f,-1.0f,-1.0f);
-        glVertex3f(-1.0f,-1.0f, 1.0f);
+        glColor3f(1.0f, 0.0f, 1.0f);
+        glVertex3f(-1.0f, 1.0f, 1.0f);
+        glVertex3f(-1.0f, 1.0f, -1.0f);
+        glVertex3f(-1.0f, -1.0f, -1.0f);
+        glVertex3f(-1.0f, -1.0f, 1.0f);
 
         //Right
-        glColor3f(1.0f,1.0f,0.0f);
-        glVertex3f( 1.0f, 1.0f,-1.0f);
-        glVertex3f( 1.0f, 1.0f, 1.0f);
-        glVertex3f( 1.0f,-1.0f, 1.0f);
-        glVertex3f( 1.0f,-1.0f,-1.0f);
+        glColor3f(1.0f, 1.0f, 0.0f);
+        glVertex3f(1.0f, 1.0f, -1.0f);
+        glVertex3f(1.0f, 1.0f, 1.0f);
+        glVertex3f(1.0f, -1.0f, 1.0f);
+        glVertex3f(1.0f, -1.0f, -1.0f);
     }
 }
