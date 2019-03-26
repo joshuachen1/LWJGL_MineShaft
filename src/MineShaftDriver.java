@@ -67,6 +67,10 @@ public class MineShaftDriver {
         glEnableClientState(GL_COLOR_ARRAY);
         glEnable(GL_DEPTH_TEST);
 
+        // For Texture Mapping
+        glEnable(GL_TEXTURE_2D);
+        glEnableClientState (GL_TEXTURE_COORD_ARRAY);
+
         //load camera to view screen
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
