@@ -12,6 +12,7 @@ public class FPCameraController {
     private float yaw = 0.0f;   //the rotation around the Y axis of the camera
     private float pitch = 0.0f; //the rotation around the X axis of the camera
     private Vector3f me;
+    private Chunk chunk;
 
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
@@ -20,6 +21,8 @@ public class FPCameraController {
         lPosition.x = 0f;
         lPosition.y = 15f;
         lPosition.z = 0f;
+        chunk = new Chunk((int)x,(int)y,(int)z );
+
     }
 
     //increment the camera's current yaw rotation
@@ -85,5 +88,9 @@ public class FPCameraController {
         glRotatef(yaw, 0.0f, 1.0f, 0.0f);
         //translate to the position vector's location
         glTranslatef(position.x, position.y, position.z);
+    }
+
+    public Chunk getChunk() {
+        return chunk;
     }
 }

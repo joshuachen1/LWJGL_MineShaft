@@ -27,7 +27,7 @@ public class Chunk {
 
     public Chunk(int startX, int startY, int startZ) {
         try{
-            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("terrain.png"));
+            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/terrain.png"));
         }
         catch(Exception e) {
             System.out.print("Error!");
@@ -157,7 +157,7 @@ public class Chunk {
     public static float[] createTexCube(float x, float y, Block block) {
         float offset = (1024f / 16) / 1024f;
         switch (block.GetID()) {
-            case 1:
+            case 0:
                 return new float[] {
                         // BOTTOM QUAD(DOWN=+Y)
                         x + offset * 3, y + offset * 10,
@@ -190,19 +190,52 @@ public class Chunk {
                         x + offset * 4, y + offset * 1,
                         x + offset * 3, y + offset * 1
                 };
+            case 1:
 
             case 2:
-                return null;
+
             case 3:
-                return null;
+
             case 4:
-                return null;
+
             case 5:
-                return null;
+
             case 6:
-                return null;
+
+            default:
+                return new float[] {
+                        // BOTTOM QUAD(DOWN=+Y)
+                        x + offset * 3, y + offset * 10,
+                        x + offset * 2, y + offset * 10,
+                        x + offset * 2, y + offset * 9,
+                        x + offset * 3, y + offset * 9,
+                        // TOP!
+                        x + offset * 3, y + offset * 1,
+                        x + offset * 2, y + offset * 1,
+                        x + offset * 2, y + offset * 0,
+                        x + offset * 3, y + offset * 0,
+                        // FRONT QUAD
+                        x + offset * 3, y + offset * 0,
+                        x + offset * 4, y + offset * 0,
+                        x + offset * 4, y + offset * 1,
+                        x + offset * 3, y + offset * 1,
+                        // BACK QUAD
+                        x + offset * 4, y + offset * 1,
+                        x + offset * 3, y + offset * 1,
+                        x + offset * 3, y + offset * 0,
+                        x + offset * 4, y + offset * 0,
+                        // LEFT QUAD
+                        x + offset * 3, y + offset * 0,
+                        x + offset * 4, y + offset * 0,
+                        x + offset * 4, y + offset * 1,
+                        x + offset * 3, y + offset * 1,
+                        // RIGHT QUAD
+                        x + offset * 3, y + offset * 0,
+                        x + offset * 4, y + offset * 0,
+                        x + offset * 4, y + offset * 1,
+                        x + offset * 3, y + offset * 1
+                };
         }
-        return null; // default return
     }
 
     private float[] getCubeColor(Block block) {
