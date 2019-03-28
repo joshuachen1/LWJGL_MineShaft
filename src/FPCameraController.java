@@ -3,7 +3,7 @@ import org.lwjgl.util.vector.Vector3f;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
- * @author Joshua Chen
+ * @author Joshua Chen, Bryan Lee, Saul Galaviz, Camille Nibungco
  * Date Created: Mar 11, 2019
  */
 public class FPCameraController {

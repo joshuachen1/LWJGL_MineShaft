@@ -8,7 +8,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
 
 /**
- * @author Joshua Chen
+ * @author Joshua Chen, Bryan Lee, Saul Galaviz, Camille Nibungco 
  * Date Created: Mar 10, 2019
  */
 public class MineShaftDriver {

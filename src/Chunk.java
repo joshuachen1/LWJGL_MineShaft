@@ -11,7 +11,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 /**
- * @author Joshua Chen
+ * @author Joshua Chen, Bryan Lee, Saul Galaviz, Camille Nibungco
  * Date Created: Mar 26, 2019
  */
 public class Chunk {
@@ -154,6 +154,7 @@ public class Chunk {
                 x + offset, y - offset, z};
     }
 
+    // Maps the textures for blocks that have a uniform skin ( same on all sides)
     private static float[] mapUniformTexture(float x, float y, float offset, float textureX, float textureY){
         float textureX2 = textureX +1;
         float textureY2 = textureY + 1;
