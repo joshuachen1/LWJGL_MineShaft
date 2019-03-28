@@ -153,7 +153,8 @@ public class MineShaftDriver {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             //you would draw your scene here.
-            render();
+           // render();
+            camera.getChunk().render();
 
             //draw the buffer to the screen
             Display.update();
