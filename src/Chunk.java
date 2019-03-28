@@ -154,10 +154,47 @@ public class Chunk {
                 x + offset, y - offset, z};
     }
 
+    private static float[] mapUniformTexture(float x, float y, float offset, float textureX, float textureY){
+        float textureX2 = textureX +1;
+        float textureY2 = textureY + 1;
+        return new float[] {
+                // BOTTOM QUAD(DOWN=+Y)
+                x + offset * textureX2, y + offset * textureY2,
+                x + offset * textureX, y + offset * textureY2,
+                x + offset * textureX, y + offset * textureY,
+                x + offset * textureX2, y + offset * textureY,
+                // TOP!
+                x + offset * textureX2, y + offset * textureY2,
+                x + offset * textureX, y + offset * textureY2,
+                x + offset * textureX, y + offset * textureY,
+                x + offset * textureX2, y + offset * textureY,
+                // FRONT QUAD
+                x + offset * textureX, y + offset * textureY,
+                x + offset * textureX2, y + offset * textureY,
+                x + offset * textureX2, y + offset * textureY2,
+                x + offset * textureX, y + offset * textureY2,
+                // BACK QUAD
+                x + offset * textureX2, y + offset * textureY2,
+                x + offset * textureX, y + offset * textureY2,
+                x + offset * textureX, y + offset * textureY,
+                x + offset * textureX2, y + offset * textureY,
+                // LEFT QUAD
+                x + offset * textureX, y + offset * textureY,
+                x + offset * textureX2, y + offset * textureY,
+                x + offset * textureX2, y + offset * textureY2,
+                x + offset * textureX, y + offset * textureY2,
+                // RIGHT QUAD
+                x + offset * textureX, y + offset * textureY,
+                x + offset * textureX2, y + offset * textureY,
+                x + offset * textureX2, y + offset * textureY2,
+                x + offset * textureX, y + offset * textureY2
+        };
+    }
+
     public static float[] createTexCube(float x, float y, Block block) {
         float offset = (1024f / 16) / 1024f;
         switch (block.GetID()) {
-            case 0:
+            case 0: // grass
                 return new float[] {
                         // BOTTOM QUAD(DOWN=+Y)
                         x + offset * 3, y + offset * 10,
@@ -190,63 +227,37 @@ public class Chunk {
                         x + offset * 4, y + offset * 1,
                         x + offset * 3, y + offset * 1
                 };
-            case 1:
+            case 1: //sand
+               return mapUniformTexture(x, y, offset, 2, 1);
+            case 2: //water
+                return mapUniformTexture(x, y, offset, 14, 0);
 
-            case 2:
+            case 3: //dirt
+                return mapUniformTexture(x, y, offset, 2, 0);
 
-            case 3:
+            case 4: //stone
+                return mapUniformTexture(x, y, offset, 1, 0);
 
-            case 4:
-
-            case 5:
-
+            case 5://bedrock
+                return mapUniformTexture(x, y, offset, 1, 1);
             case 6:
+                return mapUniformTexture(x,y,offset,2,0);
 
             default:
-                return new float[] {
-                        // BOTTOM QUAD(DOWN=+Y)
-                        x + offset * 3, y + offset * 10,
-                        x + offset * 2, y + offset * 10,
-                        x + offset * 2, y + offset * 9,
-                        x + offset * 3, y + offset * 9,
-                        // TOP!
-                        x + offset * 3, y + offset * 1,
-                        x + offset * 2, y + offset * 1,
-                        x + offset * 2, y + offset * 0,
-                        x + offset * 3, y + offset * 0,
-                        // FRONT QUAD
-                        x + offset * 3, y + offset * 0,
-                        x + offset * 4, y + offset * 0,
-                        x + offset * 4, y + offset * 1,
-                        x + offset * 3, y + offset * 1,
-                        // BACK QUAD
-                        x + offset * 4, y + offset * 1,
-                        x + offset * 3, y + offset * 1,
-                        x + offset * 3, y + offset * 0,
-                        x + offset * 4, y + offset * 0,
-                        // LEFT QUAD
-                        x + offset * 3, y + offset * 0,
-                        x + offset * 4, y + offset * 0,
-                        x + offset * 4, y + offset * 1,
-                        x + offset * 3, y + offset * 1,
-                        // RIGHT QUAD
-                        x + offset * 3, y + offset * 0,
-                        x + offset * 4, y + offset * 0,
-                        x + offset * 4, y + offset * 1,
-                        x + offset * 3, y + offset * 1
-                };
+                return mapUniformTexture(x,y,offset,2,0);
+
         }
     }
 
     private float[] getCubeColor(Block block) {
-        switch (block.GetID()) {
-            case 1:
-                return new float[] {0, 1, 0};
-            case 2:
-                return new float[] {1, 0.5f, 0};
-            case 3:
-                return new float[] {0, 0f, 1f};
-        }
+//        switch (block.GetID()) {
+//            case 1:
+//                return new float[] {0, 1, 0};
+//            case 2:
+//                return new float[] {1, 0.5f, 0};
+//            case 3:
+//                return new float[] {0, 0f, 1f};
+//        }
         return new float[] { 1, 1, 1 };
     }
 }
