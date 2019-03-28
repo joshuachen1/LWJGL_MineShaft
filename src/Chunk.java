@@ -1,6 +1,7 @@
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
+import java.util.Calendar;
 import java.util.Random;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -82,10 +83,16 @@ public class Chunk {
         FloatBuffer VertexPositionData = BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         FloatBuffer VertexColorData = BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         FloatBuffer VertexTextureData = BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE *CHUNK_SIZE)* 6 * 12);
+
+        Random random = new Random();
+        int seed = random.nextInt();
+        SimplexNoise simplexNoise = new SimplexNoise(30, .25d, seed);
+
         for (float x = 0; x < CHUNK_SIZE; x += 1) {
             for (float z = 0; z < CHUNK_SIZE; z += 1) {
                 for (float y = 0; y < CHUNK_SIZE; y++) {
-                    VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH), (float) (y * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)), (float) (startZ + z * CUBE_LENGTH)));
+                    float height = (startY + (int)(12*simplexNoise.getNoise((int)x,(int)z))*CUBE_LENGTH);
+                    VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH), (float)(int) (startY + height+y* CUBE_LENGTH + (int) (CHUNK_SIZE * .8)), (float) (startZ + z * CUBE_LENGTH)));
                     VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int) x][(int) y][(int) z])));
                     VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[(int)(x)][(int) (y)][(int) (z)]));
                 }

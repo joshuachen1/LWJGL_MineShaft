@@ -21,7 +21,7 @@ public class FPCameraController {
         lPosition.x = 0f;
         lPosition.y = 15f;
         lPosition.z = 0f;
-        chunk = new Chunk((int)x,(int)y,(int)z );
+        chunk = new Chunk((int)x+5,(int)y-40,(int)z +5 );
 
     }
 
@@ -41,42 +41,42 @@ public class FPCameraController {
     public void walkForward(float distance) {
         float xOffset = distance * (float) Math.sin(Math.toRadians(yaw));
         float zOffset = distance * (float) Math.cos(Math.toRadians(yaw));
-        position.x -= xOffset;
-        position.z += zOffset;
+        position.x -= xOffset*3;
+        position.z += zOffset*3;
     }
 
     //moves the camera backward relative to its current rotation (yaw)
     public void walkBackwards(float distance) {
         float xOffset = distance * (float) Math.sin(Math.toRadians(yaw));
         float zOffset = distance * (float) Math.cos(Math.toRadians(yaw));
-        position.x += xOffset;
-        position.z -= zOffset;
+        position.x += xOffset*3;
+        position.z -= zOffset*3;
     }
 
     //strafes the camera left relative to its current rotation (yaw)
     public void strafeLeft(float distance) {
         float xOffset = distance * (float) Math.sin(Math.toRadians(yaw - 90));
         float zOffset = distance * (float) Math.cos(Math.toRadians(yaw - 90));
-        position.x -= xOffset;
-        position.z += zOffset;
+        position.x -= xOffset*3;
+        position.z += zOffset*3;
     }
 
     //strafes the camera right relative to its current rotation (yaw)
     public void strafeRight(float distance) {
         float xOffset = distance * (float) Math.sin(Math.toRadians(yaw + 90));
         float zOffset = distance * (float) Math.cos(Math.toRadians(yaw + 90));
-        position.x -= xOffset;
-        position.z += zOffset;
+        position.x -= xOffset*3;
+        position.z += zOffset*3;
     }
 
     //moves the camera up relative to its current rotation (yaw)
     public void moveUp(float distance) {
-        position.y -= distance;
+        position.y -= distance*3;
     }
 
     //moves the camera down
     public void moveDown(float distance) {
-        position.y += distance;
+        position.y += distance*3;
     }
 
     //translates and rotate the matrix so that it looks through the camera
