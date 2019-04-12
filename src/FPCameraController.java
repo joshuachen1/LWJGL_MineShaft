@@ -1,4 +1,9 @@
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
+
+import java.util.logging.Logger;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -90,6 +95,134 @@ public class FPCameraController {
         glTranslatef(position.x, position.y, position.z);
     }
 
+    public void gameLoop() throws InterruptedException{
+
+        FPCameraController camera = new FPCameraController(5, 5, 5);
+        float dx;
+        float dy;
+        //float dt = 0.0f; //length of frame
+        //float lastTime = 0.0f; // when the last frame was
+        //long time = 0;
+        float mouseSensitivity = 0.09f;
+        float movementSpeed = .35f;
+
+
+        Mouse.setGrabbed(true); //Hide mouse in program
+
+
+        while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+            dx = Mouse.getDX(); //distance in mouse movement
+            dy = Mouse.getDY();//distance in mouse movement
+            camera.yaw(dx * mouseSensitivity);
+            camera.pitch(dy * mouseSensitivity);
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_W)){
+                camera.walkForward(movementSpeed);
+            }
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_S)){
+                camera.walkBackwards(movementSpeed);
+            }
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_A)){
+                camera.strafeLeft(movementSpeed);
+            }
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_D)){
+                camera.strafeRight(movementSpeed);
+            }
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+                camera.moveUp(movementSpeed);
+            }
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                camera.moveDown(movementSpeed);
+            }
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+                chunk = new Chunk(0,0,0);
+            }
+
+            glLoadIdentity();//set the modelview matrix back to the identity
+            camera.lookThrough(); //look through the camera before you draw anything
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            chunk.render();
+
+            //renderCube();
+            Display.update();
+            Display.sync(60);
+        }
+        Display.destroy();
+    }
+    //method: render
+    //purpose: renders a square
+    private void render() {
+        try{
+            glBegin(GL_QUADS);
+            glColor3f(2.0f,0.0f,2.0f);
+            glVertex3f( 1.0f,-2.0f,-1.0f);
+            glVertex3f(-1.0f,-2.0f,-1.0f);
+            glVertex3f(-1.0f, 2.0f,-1.0f);
+            glVertex3f( 1.0f, 2.0f,-1.0f);
+            glEnd();
+        }
+        catch(Exception e){}
+    }
+    //method: renderCube
+    //purpose: renders a cube
+    private void renderCube() {
+        try {
+            //Top Side
+            glBegin(GL_QUADS);
+            glColor3f(0.098f, 0.098f, 0.439f);
+            glVertex3f(1.0f, 1.0f, -1.0f);
+            glVertex3f(-1.0f, 1.0f, -1.0f);
+            glVertex3f(-1.0f, 1.0f, 1.0f);
+            glVertex3f(1.0f, 1.0f, 1.0f);
+
+            //Bottom Side
+            glColor3f(0.373f, 0.620f, 0.627f);
+            glVertex3f(1.0f, -1.0f, 1.0f);
+            glVertex3f(-1.0f, -1.0f, 1.0f);
+            glVertex3f(-1.0f, -1.0f, -1.0f);
+            glVertex3f(1.0f, -1.0f, -1.0f);
+
+            //Front Side
+            glColor3f(0.000f, 0.502f, 0.502f);
+            glVertex3f(1.0f, 1.0f, 1.0f);
+            glVertex3f(-1.0f, 1.0f, 1.0f);
+            glVertex3f(-1.0f, -1.0f, 1.0f);
+            glVertex3f(1.0f, -1.0f, 1.0f);
+
+            //Back Side
+            glColor3f(0.400f, 0.804f, 0.667f);
+            glVertex3f(1.0f, -1.0f, -1.0f);
+            glVertex3f(-1.0f, -1.0f, -1.0f);
+            glVertex3f(-1.0f, 1.0f, -1.0f);
+            glVertex3f(1.0f, 1.0f, -1.0f);
+
+            //Left Side
+            glColor3f(1.000f, 0.000f, 1.000f);
+            glVertex3f(-1.0f, 1.0f, 1.0f);
+            glVertex3f(-1.0f, 1.0f, -1.0f);
+            glVertex3f(-1.0f, -1.0f, -1.0f);
+            glVertex3f(-1.0f, -1.0f, 1.0f);
+
+            //Right Side
+            glColor3f(1.000f, 0.647f, 0.000f);
+            glVertex3f(1.0f, 1.0f, -1.0f);
+            glVertex3f(1.0f, 1.0f, 1.0f);
+            glVertex3f(1.0f, -1.0f, 1.0f);
+            glVertex3f(1.0f, -1.0f, -1.0f);
+            glEnd();
+
+
+        } catch (Exception e) {
+
+        }
+    }
+    private static final Logger LOG = Logger.getLogger(FPCameraController.class.getName());
     public Chunk getChunk() {
         return chunk;
     }

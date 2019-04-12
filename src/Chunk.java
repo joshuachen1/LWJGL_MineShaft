@@ -1,15 +1,13 @@
 import org.lwjgl.BufferUtils;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 import java.nio.FloatBuffer;
-import java.util.Calendar;
 import java.util.Random;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
-
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 /**
  * @author Joshua Chen, Bryan Lee, Saul Galaviz, Camille Nibungco
@@ -267,5 +265,39 @@ public class Chunk {
 //                return new float[] {0, 0f, 1f};
 //        }
         return new float[] { 1, 1, 1 };
+    }
+
+    public static float[] blockTexture(float x, float y, float offset, int xTop, int yTop, int xSide, int ySide, int xBottom, int yBottom){
+        return new float[] {
+                // BOTTOM QUAD(DOWN=+Y)
+                x + offset*xTop, y + offset*yTop,
+                x + offset*(xTop-1), y + offset*yTop,
+                x + offset*(xTop-1), y + offset*(yTop-1),
+                x + offset*xTop, y + offset*(yTop-1),
+                // TOP!
+                x + offset*xBottom, y + offset*yBottom,
+                x + offset*(xBottom-1), y + offset*yBottom,
+                x + offset*(xBottom-1), y + offset*(yBottom-1),
+                x + offset*xBottom, y + offset*(yBottom-1),
+                // FRONT QUAD
+                x + offset*xSide, y + offset*(ySide-1),
+                x + offset*(xSide-1), y + offset*(ySide-1),
+                x + offset*(xSide-1), y + offset*ySide,
+                x + offset*xSide, y + offset*ySide,
+                // BACK QUAD
+                x + offset*xSide, y + offset*ySide,
+                x + offset*(xSide-1), y + offset*ySide,
+                x + offset*(xSide-1), y + offset*(ySide-1),
+                x + offset*xSide, y + offset*(ySide-1),
+                // LEFT QUAD
+                x + offset*xSide, y + offset*(ySide-1),
+                x + offset*(xSide-1), y + offset*(ySide-1),
+                x + offset*(xSide-1), y + offset*ySide,
+                x + offset*xSide, y + offset*ySide,
+                // RIGHT QUAD
+                x + offset*xSide, y + offset*(ySide-1),
+                x + offset*(xSide-1), y + offset*(ySide-1),
+                x + offset*(xSide-1), y + offset*ySide,
+                x + offset*xSide, y + offset*ySide};
     }
 }
