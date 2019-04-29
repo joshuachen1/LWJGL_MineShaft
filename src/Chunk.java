@@ -17,6 +17,7 @@ public class Chunk {
     static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
     private Block[][][] Blocks;
+    private double[][] heightMap;
     private int VBOVertexHandle;
     private int VBOColorHandle;
     private int VBOTextureHandle;
@@ -299,5 +300,8 @@ public class Chunk {
                 x + offset*(xSide-1), y + offset*(ySide-1),
                 x + offset*(xSide-1), y + offset*ySide,
                 x + offset*xSide, y + offset*ySide};
+    }
+    public double[][] getHeightMap() {
+        return heightMap;
     }
 }

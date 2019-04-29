@@ -1,8 +1,11 @@
+import org.lwjgl.BufferUtils;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+
+import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
@@ -12,6 +15,11 @@ import static org.lwjgl.util.glu.GLU.gluPerspective;
  * Date Created: Mar 10, 2019
  */
 public class MineShaftDriver {
+
+    private FloatBuffer lightPosition;
+    private FloatBuffer whiteLight;
+    private FloatBuffer darkLight;
+
     public static void main(String[] args) {
         final float WIDTH = 640;
         final float HEIGHT = 480;
@@ -85,7 +93,30 @@ public class MineShaftDriver {
         gluPerspective((float) 100.0f, width / height, 0.001f, 100);
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        glDepthFunc(GL_LESS);
+
+        initLightArrays();
+        glLight(GL_LIGHT0, GL_POSITION, lightPosition);
+        glLight(GL_LIGHT0, GL_SPECULAR, whiteLight);
+        glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);
+        glLight(GL_LIGHT0, GL_AMBIENT, darkLight);
+
+        glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHT0);
+
     }
+
+    private void initLightArrays() {
+        lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(0.0f).put(0.0f).put(0.0f).put(1.0f).flip();
+
+        whiteLight = BufferUtils.createFloatBuffer(4);
+        whiteLight.put(7.0f).put(7.0f).put(7.0f).put(0.0f).flip();
+
+        darkLight = BufferUtils.createFloatBuffer(4);
+        darkLight.put(0.3f).put(0.3f).put(0.3f).put(0.0f).flip();
+    }
+
 
     public void gameLoop(FPCameraController camera) {
         float dx = 0.0f;
