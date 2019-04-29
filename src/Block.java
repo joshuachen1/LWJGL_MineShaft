@@ -3,53 +3,34 @@
  * Date Created: Mar 26, 2019
  */
 
-public class Block {
-    private boolean IsActive;
-    private BlockType Type;
-    private float x, y, z;
+import Grid.Grid3D;
+import Models.CubeModel;
+import Models.CubeType;
+import org.newdawn.slick.opengl.Texture;
 
-    public enum BlockType {
-        BlockType_Grass(0),
-        BlockType_Sand(1),
-        BlockType_Water(2),
-        BlockType_Dirt(3),
-        BlockType_Stone(4),
-        BlockType_Bedrock(5),
-        BlockType_Default(6);
+public class Block implements Flyweight {
 
+    private final float CUBE_SIZE = .1f;
+    CubeType cubeType;
+    CubeModel cubemodel;
 
-        private int BlockID;
-
-        BlockType(int id) {
-            BlockID = id;
-        }
-        public int GetID(){
-            return BlockID;
-        }
-        public void SetID(int i){
-            BlockID = i;
-        }
+    public Block(CubeType cubeType) {
+        this.cubeType = cubeType;
+        cubemodel = new CubeModel(new Grid3D(), CUBE_SIZE, cubeType);
     }
 
-    public Block(BlockType type){
-        Type= type;
+    public Block(CubeType cubeType, float x, float y, float z) {
+        this.cubeType = cubeType;
+        cubemodel = new CubeModel(new Grid3D(x, y, z), CUBE_SIZE, cubeType);
     }
 
-    public void setCoords(float x, float y, float z){
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    @Override
+    public void setTexture(Texture texture, int textureCubeSize) {
+        cubemodel.setTexture(texture, textureCubeSize);
     }
 
-    public boolean IsActive() {
-        return IsActive;
-    }
-
-    public void SetActive(boolean active){
-        IsActive=active;
-    }
-
-    public int GetID(){
-        return Type.GetID();
+    @Override
+    public void draw() {
+        cubemodel.draw();
     }
 }
