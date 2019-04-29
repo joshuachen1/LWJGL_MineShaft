@@ -16,14 +16,16 @@ import static org.lwjgl.opengl.GL15.*;
 public class Chunk {
     static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
+    static final float persistanceMin = 0.03f;
+    static final float persistanceMax = 0.06f;
+    private Random random = new Random();
     private Block[][][] Blocks;
-    private double[][] heightMap;
     private int VBOVertexHandle;
     private int VBOColorHandle;
-    private int VBOTextureHandle;
-    private Texture texture;
     private int StartX, StartY, StartZ;
     private Random r;
+    private int VBOTextureHandle;
+    private Texture texture;
 
     public Chunk(int startX, int startY, int startZ) {
         try{
@@ -118,6 +120,12 @@ public class Chunk {
                     CubeColorArray.length];
         }
         return cubeColors;
+    }
+
+    //method: getCubeColor
+    //purpose: returns cube color (not used because we have textures)
+    private float[] getCubeColor(Block block) {
+        return new float[] { 1, 1, 1 };
     }
 
     public static float[] createCube(float x, float y, float z) {
@@ -256,18 +264,6 @@ public class Chunk {
         }
     }
 
-    private float[] getCubeColor(Block block) {
-//        switch (block.GetID()) {
-//            case 1:
-//                return new float[] {0, 1, 0};
-//            case 2:
-//                return new float[] {1, 0.5f, 0};
-//            case 3:
-//                return new float[] {0, 0f, 1f};
-//        }
-        return new float[] { 1, 1, 1 };
-    }
-
     public static float[] blockTexture(float x, float y, float offset, int xTop, int yTop, int xSide, int ySide, int xBottom, int yBottom){
         return new float[] {
                 // BOTTOM QUAD(DOWN=+Y)
@@ -300,8 +296,5 @@ public class Chunk {
                 x + offset*(xSide-1), y + offset*(ySide-1),
                 x + offset*(xSide-1), y + offset*ySide,
                 x + offset*xSide, y + offset*ySide};
-    }
-    public double[][] getHeightMap() {
-        return heightMap;
     }
 }
